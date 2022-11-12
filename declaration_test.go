@@ -7,9 +7,11 @@ import (
 )
 
 type testDeclarer struct {
-	_QueueDeclare    func(string) (amqp.Queue, error)
-	_ExchangeDeclare func() error
-	_QueueBind       func() error
+	_QueueDeclare           func(string) (amqp.Queue, error)
+	_ExchangeDeclare        func() error
+	_QueueBind              func() error
+	_QueueDeclarePassive    func() (amqp.Queue, error)
+	_ExchangeDeclarePassive func() error
 }
 
 func (td *testDeclarer) QueueDeclare(name string, durable, autoDelete,
@@ -25,6 +27,16 @@ func (td *testDeclarer) ExchangeDeclare(name, kind string, durable, autoDelete,
 func (td *testDeclarer) QueueBind(name, key, exchange string, noWait bool,
 	args amqp.Table) error {
 	return td._QueueBind()
+}
+
+func (td *testDeclarer) QueueDeclarePassive(name string, durable, autoDelete,
+	exclusive, noWait bool, args amqp.Table) (amqp.Queue, error) {
+	return td._QueueDeclarePassive()
+}
+
+func (td *testDeclarer) ExchangeDeclarePassive(name, kind string, durable,
+	autoDelete, internal, noWait bool, args amqp.Table) error {
+	return td._ExchangeDeclarePassive()
 }
 
 func TestDeclareQueue(t *testing.T) {
@@ -103,5 +115,45 @@ func TestDeclareBinding(t *testing.T) {
 
 	if !ok {
 		t.Error("DeclareBinding() should call declarer.QueueBind()")
+	}
+}
+
+func TestDeclareQueuePassive(t *testing.T) {
+	var ok bool
+
+	q := &Queue{
+		Name: "Q1",
+	}
+
+	td := &testDeclarer{
+		_QueueDeclarePassive: func() (amqp.Queue, error) {
+			ok = true
+			return amqp.Queue{Name: q.Name}, nil
+		},
+	}
+
+	DeclareQueuePassive(q)(td)
+
+	if !ok {
+		t.Error("DeclareQueuePassive() should call declarer.QueueDeclarePassive()")
+	}
+}
+
+func TestDeclareExchangePassive(t *testing.T) {
+	var ok bool
+
+	e := Exchange{Name: "ex1"}
+
+	td := &testDeclarer{
+		_ExchangeDeclarePassive: func() error {
+			ok = true
+			return nil
+		},
+	}
+
+	DeclareExchangePassive(e)(td)
+
+	if !ok {
+		t.Error("DeclareExchangePassive() should call declarer.ExchangeDeclarePassive()")
 	}
 }
