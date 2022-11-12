@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/smtp"
 
-	"github.com/rueian/cony"
+	"github.com/Dcard/cony"
 )
 
 var url = flag.String("url", "amqp://guest:guest@localhost/", "amqp url")

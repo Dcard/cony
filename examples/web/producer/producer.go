@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rueian/cony"
+	"github.com/Dcard/cony"
 	"github.com/streadway/amqp"
 )
 

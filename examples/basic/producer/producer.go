@@ -4,9 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/rueian/cony"
-	"github.com/streadway/amqp"
 	"time"
+
+	"github.com/Dcard/cony"
+	"github.com/streadway/amqp"
 )
 
 var url = flag.String("url", "amqp://guest:guest@localhost/", "amqp url")

@@ -1,3 +1,5 @@
-module github.com/rueian/cony
+module github.com/Dcard/cony
 
-require github.com/streadway/amqp v0.0.0-20180806233856-70e15c650864
+go 1.19
+
+require github.com/streadway/amqp v1.0.0
