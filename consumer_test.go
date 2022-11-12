@@ -62,9 +62,9 @@ func TestConsumer_Cancel_willNotBlock(t *testing.T) {
 		ok = true
 	}()
 
-	time.Sleep(1 * time.Microsecond) // let goroutine to work
+	time.Sleep(10 * time.Microsecond) // let goroutine to work
 	if !ok {
-		t.Error("shold not block")
+		t.Error("should not block")
 	}
 }
 
