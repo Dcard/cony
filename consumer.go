@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 // ConsumerOpt is a consumer's functional option type
@@ -123,6 +123,7 @@ func Tag(tag string) ConsumerOpt {
 }
 
 // AutoTag set automatically generated tag like this
+//
 //	fmt.Sprintf(QueueName+"-pid-%d@%s", os.Getpid(), os.Hostname())
 func AutoTag() ConsumerOpt {
 	return func(c *Consumer) {
