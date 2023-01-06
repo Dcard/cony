@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Dcard/cony"
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 var url = flag.String("url", "amqp://guest:guest@localhost/", "amqp url")

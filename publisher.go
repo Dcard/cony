@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 // ErrPublisherDead indicates that publisher was canceled, could be returned
@@ -34,7 +34,7 @@ type Publisher struct {
 // Template will be used, input buffer will be added as Publishing.Body.
 // return int will always be len(b)
 //
-// Implements io.Writer
+// # Implements io.Writer
 //
 // WARNING: this is blocking call, it will not return until connection is
 // available. The only way to stop it is to use Cancel() method.
